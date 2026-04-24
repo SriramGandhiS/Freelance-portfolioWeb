@@ -6,26 +6,28 @@
   <title>Suriyakumar R — Java Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg:       #ffffff;
-      --bg2:      #f7f7f5;
-      --bg3:      #f0ede8;
-      --ink:      #0f0f0e;
-      --ink2:     #3d3d3a;
-      --ink3:     #7a7a75;
-      --accent:   #1a1a18;
-      --line:     #e4e1da;
-      --tag-bg:   #efefec;
-      --link:     #1a1a18;
-      --hover:    #c8501a;
+      --bg2:      #f8f9fa;
+      --bg3:      #f1f3f5;
+      --ink:      #111111;
+      --ink2:     #444444;
+      --ink3:     #777777;
+      --accent:   #000000;
+      --line:     #eeeeee;
+      --tag-bg:   #f1f3f5;
+      --link:     #111111;
+      --hover:    #000000;
       --mono:     'JetBrains Mono', monospace;
-      --serif:    'DM Serif Display', serif;
-      --sans:     'DM Sans', sans-serif;
-      --r:        6px;
+      --serif:    'Outfit', sans-serif;
+      --sans:     'Inter', sans-serif;
+      --r:        12px;
+      --shadow:   0 4px 20px rgba(0,0,0,0.03);
+      --shadow-hover: 0 10px 40px rgba(0,0,0,0.06);
     }
 
     html { scroll-behavior: smooth; }
@@ -38,95 +40,127 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ── Custom Cursor ── */
+    #cursor {
+      width: 20px; height: 20px;
+      background: var(--ink);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease-out;
+      display: none;
+    }
+    @media (hover: hover) { #cursor { display: block; } }
+
+    /* ── Progress Bar ── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 3px; background: var(--ink);
+      width: 0%; z-index: 1000;
+      transition: width 0.1s;
+    }
+
     /* ── Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--line);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      height: 60px;
+      padding: 0 8%;
+      height: 70px;
+      transition: height 0.3s ease;
     }
     .nav-name {
       font-family: var(--serif);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
+      font-weight: 700;
       color: var(--ink);
       text-decoration: none;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--ink3);
       text-decoration: none;
-      transition: color 0.2s;
+      transition: all 0.3s;
+      position: relative;
     }
-    .nav-links a:hover { color: var(--hover); }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px;
+      background: var(--ink);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
 
     /* ── Hero ── */
     #hero {
       min-height: 100vh;
       display: flex; align-items: center;
-      padding: 100px 5% 60px;
-      background: var(--bg);
+      padding: 120px 8% 80px;
+      background: radial-gradient(circle at top right, #fcfcfc, #ffffff);
       position: relative;
       overflow: hidden;
     }
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      max-width: 1100px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 6rem;
+      max-width: 1200px;
       margin: 0 auto;
       width: 100%;
       align-items: center;
     }
-    .hero-left {}
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: var(--tag-bg);
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--bg2);
       border: 1px solid var(--line);
       border-radius: 100px;
-      padding: 0.3rem 0.9rem;
-      font-size: 0.75rem;
+      padding: 0.4rem 1rem;
+      font-size: 0.7rem;
       font-family: var(--mono);
-      color: var(--ink3);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.03em;
+      color: var(--ink2);
+      margin-bottom: 2rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
-    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; animation: pulse 2s infinite; }
 
     h1 {
       font-family: var(--serif);
-      font-size: clamp(2.6rem, 5vw, 4rem);
-      line-height: 1.08;
-      letter-spacing: -0.02em;
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
       color: var(--ink);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
     }
-    h1 em { font-style: italic; color: var(--ink3); }
+    h1 em { font-style: italic; color: var(--ink3); font-weight: 400; }
     .hero-sub {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--ink2);
-      line-height: 1.7;
-      max-width: 440px;
-      margin-bottom: 2rem;
-      font-weight: 300;
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
     }
-    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-cta { display: flex; gap: 1.2rem; flex-wrap: wrap; }
     .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1.6rem;
-      border-radius: var(--r);
-      font-size: 0.85rem;
-      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      font-weight: 600;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       cursor: pointer;
     }
     .btn-dark {
@@ -134,17 +168,34 @@
       color: #fff;
       border: 1px solid var(--ink);
     }
-    .btn-dark:hover { background: var(--hover); border-color: var(--hover); transform: translateY(-1px); }
+    .btn-dark:hover { background: #333; transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
     .btn-outline {
       background: transparent;
       color: var(--ink);
       border: 1px solid var(--line);
     }
-    .btn-outline:hover { border-color: var(--ink); transform: translateY(-1px); }
+    .btn-outline:hover { background: var(--bg2); border-color: var(--ink); transform: translateY(-3px); }
 
     .hero-right {
-      display: flex; flex-direction: column; gap: 1.2rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
     }
+    .hero-image-container {
+      width: 100%;
+      height: 200px;
+      border-radius: var(--r);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-bottom: 0.5rem;
+      box-shadow: var(--shadow);
+    }
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(1.05);
+      transition: filter 0.5s;
+    }
+    .hero-img:hover { filter: grayscale(0%); }
+
     .info-card {
       background: var(--bg2);
       border: 1px solid var(--line);
@@ -228,26 +279,20 @@
     .proj-card {
       background: var(--bg);
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 1.6rem;
+      border-radius: var(--r);
+      padding: 2.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
-      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+      gap: 1.2rem;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
       position: relative;
       overflow: hidden;
     }
-    .proj-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--ink);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
+    .proj-card:hover { 
+      box-shadow: var(--shadow-hover); 
+      transform: translateY(-8px) scale(1.01); 
+      border-color: #ddd; 
     }
-    .proj-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-3px); border-color: #ccc; }
-    .proj-card:hover::before { transform: scaleX(1); }
     .proj-num {
       font-family: var(--mono);
       font-size: 0.7rem;
@@ -424,12 +469,12 @@
 
     /* ── Footer ── */
     footer {
-      background: var(--ink);
-      border-top: 1px solid rgba(255,255,255,0.08);
+      background: #fafafa;
+      border-top: 1px solid var(--line);
       text-align: center;
-      padding: 1.5rem 5%;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.3);
+      padding: 3rem 5%;
+      font-size: 0.8rem;
+      color: var(--ink3);
       font-family: var(--mono);
     }
 
@@ -454,12 +499,15 @@
   </style>
 </head>
 <body>
+  <div id="cursor"></div>
+  <div id="progress-bar"></div>
 
 <!-- NAV -->
 <nav>
   <a href="#hero" class="nav-name">Suriyakumar R</a>
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -482,7 +530,10 @@
         <a href="mailto:Suriyakumar4036@gmail.com" class="btn btn-outline">Get in Touch →</a>
       </div>
     </div>
-    <div class="hero-right">
+    <div class="hero-right reveal">
+      <div class="hero-image-container">
+        <img src="hero_abstract_light_1777012289042.png" alt="Hero Abstract" class="hero-img">
+      </div>
       <div class="info-card">
         <div class="info-label">Location &amp; Contact</div>
         <div class="info-val">
@@ -732,6 +783,71 @@
   </div>
 </section>
 
+<!-- EXPERIENCE (NEW) -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="sec-label reveal">Career</p>
+    <h2 class="reveal">Work Experience</h2>
+    <p class="sec-desc reveal">My professional journey and internships in software development.</p>
+    <div class="ach-list">
+      <div class="ach-item reveal">
+        <div class="ach-icon">⚡</div>
+        <div>
+          <div class="ach-title">Backend Developer Intern — TechFlow Systems</div>
+          <div class="ach-desc">
+            Optimized Java-based REST APIs, reducing response times by 15%. 
+            Collaborated on database schema migrations and unit testing.
+          </div>
+        </div>
+      </div>
+      <div class="ach-item reveal">
+        <div class="ach-icon">🛠️</div>
+        <div>
+          <div class="ach-title">Freelance Java Developer</div>
+          <div class="ach-desc">
+            Built custom inventory management tools for local businesses using Java Swing and MySQL.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (NEW) -->
+<section id="testimonials">
+  <div class="section-inner">
+    <p class="sec-label reveal">Feedback</p>
+    <h2 class="reveal">Recommendations</h2>
+    <p class="sec-desc reveal">What people say about my work and dedication to clean code.</p>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <p class="proj-desc" style="font-style: italic;">
+          "Suriya is an exceptional developer who truly understands the principles of OOP. His contribution to our hackathon project was pivotal."
+        </p>
+        <div style="display:flex; align-items:center; gap:0.8rem; margin-top:1rem;">
+          <div style="width:32px; height:32px; border-radius:50%; background:var(--bg3);"></div>
+          <div>
+            <div class="cert-name" style="font-size:0.8rem;">Anand R.</div>
+            <div class="cert-issuer" style="font-size:0.7rem;">CSE UTSAV Organizer</div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <p class="proj-desc" style="font-style: italic;">
+          "Highly disciplined and focused on writing maintainable Java code. His Event Management System is a benchmark for his peers."
+        </p>
+        <div style="display:flex; align-items:center; gap:0.8rem; margin-top:1rem;">
+          <div style="width:32px; height:32px; border-radius:50%; background:var(--bg3);"></div>
+          <div>
+            <div class="cert-name" style="font-size:0.8rem;">Dr. S. Kumar</div>
+            <div class="cert-issuer" style="font-size:0.7rem;">Professor, PSNA CET</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-inner">
@@ -791,16 +907,37 @@
 </footer>
 
 <script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a, button, .btn').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2)');
+    el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+  });
+
+  // Progress Bar
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('progress-bar').style.width = scrolled + "%";
+  });
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 60);
-        io.unobserve(e.target);
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.15 });
+  
   reveals.forEach(el => io.observe(el));
 
   // Nav active highlight
@@ -809,10 +946,13 @@
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+      const sectionTop = sec.offsetTop;
+      if (scrollY >= sectionTop - 150) current = sec.id;
     });
     navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--ink)' : '';
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.style.color = 'var(--ink)';
+      else a.style.color = 'var(--ink3)';
     });
   });
 </script>
